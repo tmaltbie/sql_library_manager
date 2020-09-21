@@ -15,8 +15,8 @@ function asyncHandler(cb){
 }
 
 /* GET books listing. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: "Starfield Library" });
+router.get('/', (req, res, next) => {
+  res.render("books/index", { title: "The StarField Library" });
 });
 
 /* GET Create a new book form, /books/new */ 
@@ -24,11 +24,23 @@ router.get('/new', (req, res) => {
   res.render("books/new", { book: {}, title: "New Book"} )
 })
 
-/* POST Add new book to the database, /books/new */
+/* POST create book: /books/new */
+router.post('/', asyncHandler(async (req, res) => {
+  // req body property returns an object containing the key value pairs 
+  const book = await Book.create(req.body) 
+  console.log(req.body)
+  res.redirect("/books/" + book.id);
+}))
 
-/* GET Show book detail form, /books/:id */
+/* GET show book detail form, /books/:id */
+router.get('/', (req, res) => {
+  res.render("/:id")
+})
 
 /* POST Updates book info in the database */
+// router.post('/', asyncHandler(async(req, res) => {
+
+// }))
 
 /* POST Delete a book, /books/:id/delete */
 
