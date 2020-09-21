@@ -24,7 +24,7 @@ router.get('/new', (req, res) => {
   res.render("books/new", { book: {}, title: "New Book"} )
 })
 
-/* POST create book: /books/new */
+/* POST create book @ /books/new */
 router.post('/', asyncHandler(async (req, res) => {
   // req body property returns an object containing the key value pairs 
   const book = await Book.create(req.body) 
@@ -33,9 +33,14 @@ router.post('/', asyncHandler(async (req, res) => {
 }))
 
 /* GET show book detail form, /books/:id */
-router.get('/', (req, res) => {
-  res.render("/:id")
-})
+router.get('/', asyncHandler(async(req, res) => {
+  const book = await Book.findByPk(req.params.id)
+  if (book) {
+    res.render("/:id", {book: {}, title: "Update Book"})
+  } else {
+    res.sendStatus(404)
+  }
+}))
 
 /* POST Updates book info in the database */
 // router.post('/', asyncHandler(async(req, res) => {
