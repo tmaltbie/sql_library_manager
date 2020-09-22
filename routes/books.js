@@ -39,7 +39,7 @@ router.post('/', asyncHandler(async (req, res) => {
   // req body property returns an object containing the key value pairs 
   const book = await Book.create(req.body) 
   console.log(req.body) // this never logs to console.
-  res.redirect("/books/" + book.id);
+  res.redirect("books/" + book.id);
 }))
 
 /* GET shows book detail form */
