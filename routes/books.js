@@ -18,7 +18,6 @@ function asyncHandler(cb){
 /* GET books listing. */
 router.get('/', asyncHandler(async (req, res) => {
   let books = await Book.findAll()
-  console.log(books)
   res.render("books/index", { books, title: "The StarField Library" });
 }));
 
@@ -39,7 +38,7 @@ router.get('/new', (req, res) => {
 router.post('/', asyncHandler(async (req, res) => {
   // req body property returns an object containing the key value pairs 
   const book = await Book.create(req.body) 
-  console.log(req.body)
+  console.log(req.body) // this never logs to console.
   res.redirect("/books/" + book.id);
 }))
 
