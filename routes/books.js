@@ -5,10 +5,11 @@ const {Book} = require('../models');
 /* Handler function wrap each route. */
 // middleware async abstraction code: https://teamtreehouse.com/library/create-entries
 function asyncHandler(cb){
-  return async(req, res, nest) => {
+  return async(req, res, next) => {
     try {
       await cb(req, res, next)
     } catch(error){
+      console.error(error)
       res.status(500).send(error)
     }
   }
@@ -17,33 +18,44 @@ function asyncHandler(cb){
 /* GET books listing. */
 router.get('/', asyncHandler(async (req, res) => {
   let books = await Book.findAll()
-  console.log(req.body)
+  console.log(books)
   res.render("books/index", { books, title: "The StarField Library" });
 }));
 
-/* GET Create a new book form, /books/new */ 
+/* GET sorts book by ascending title  */
+router.get('/title/asc', asyncHandler(async (req, res) => {
+  let books = await Book.findAll({
+    order: [['title', 'ASC']]
+  })
+  res.render("books/index", { books, title: "The StarField Library" })
+}))
+
+/* GET shows the create new book form */ 
 router.get('/new', (req, res) => {
   res.render("books/new", { book: {}, title: "New Book"} )
 })
 
-/* POST create book @ /books/new */
-// router.post('/', asyncHandler(async (req, res) => {
-//   // req body property returns an object containing the key value pairs 
-//   const book = await Book.create(req.body) 
-//   console.log(req.body)
-//   res.redirect("/books/" + book.id);
-// }))
+/* POST posts a new book to the database */
+router.post('/', asyncHandler(async (req, res) => {
+  // req body property returns an object containing the key value pairs 
+  const book = await Book.create(req.body) 
+  console.log(req.body)
+  res.redirect("/books/" + book.id);
+}))
 
-/* GET show book detail form, /books/:id */
-router.get('/:id', (req, res) => {
-  // const book = await Book.findByPk(req.params.id)
-  res.render("books/detail", {book: {}, title: "Update Book"})
-});
+/* GET shows book detail form */
+router.get('/:id', asyncHandler(async (req, res) => {
+  const book = await Book.findByPk(req.params.id)
+  res.render("books/detail", { book, title: "Update Book" })
+}));
 
-/* POST Updates book info in the database */
-// router.post('/', asyncHandler(async(req, res) => {
-
-// }))
+/* POST Update book info in the database */
+router.post('/:id', asyncHandler(async(req, res) => {
+  const book = await Book.findByPk(req.params.id);
+  await book.update(req.body);
+  console.log("log: " + req.body)
+  res.redirect("/books")
+}));
 
 /* POST Delete a book, /books/:id/delete */
 
