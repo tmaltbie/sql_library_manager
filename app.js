@@ -1,20 +1,20 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var routes = require('./routes/index');
-var books = require('./routes/books');
+const routes = require('./routes/index');
+const books = require('./routes/books');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // add static middleware
-app.use('/static', express.static('public'));
+// app.use('/static', express.static('public'));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -31,7 +31,7 @@ app.use( (req, res, next) => {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
