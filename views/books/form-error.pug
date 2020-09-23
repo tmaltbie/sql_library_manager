@@ -1,13 +1,11 @@
 extends ../layout
 
 block content
-  h1 New Book
   if(errors)
     h2.error Oooops!
     ul.error
       li Author is required
       li Name is required
-      include form
       //- p
       //-   label(for='title') Title
       //-   input#title(name='title', type='text')
