@@ -37,29 +37,24 @@ router.post('/new', asyncHandler(async (req, res, next) => {
 router.get('/:id', asyncHandler(async (req, res, next) => {
     const book = await Book.findByPk(req.params.id)
     if (book) {
+        console.log(book)
         res.render("books/update", { book, title: "Update Book" })
     } else {
-        const error = new Error('500 error')
-        error.status = 500;
-        next(error)
+        console.error(error)
+        console.log("big error in update book")
+        // const error = new Error('500 error')
+        // error.status = 500;
+        // next(error)
     }
 }));
 
 /* POST updated book => database */
 router.post('/:id', asyncHandler(async (req, res) => {
     let book;
-    try {
-        book = await Book.findByPk(req.params.id);
-        console.log("FOUND BOOK:", book)
-        if(book){
-            await book.update(req.body);
-            res.redirect('/books');
-        } else {
-            res.sendStatus(404);
-        }
-    } catch (error) {
-        console.error(error)
-    }
+    book = await Book.findByPk(req.params.id);
+    await book.update(req.body);
+    console.log(req.body)
+    res.redirect('/books');
 }));
 
 /* POST Delete a book, /books/:id/delete */
