@@ -18,13 +18,7 @@ function asyncHandler(cb){
 /* GET all books */
 router.get('/', asyncHandler(async (req, res, next) => {
     const books = await Book.findAll()
-    if (books) {
-        res.render("books/index", { books, title: "Books" });
-    } else {
-        const error = new Error('404 Error');
-        error.status = 404;
-        next(error)
-    }
+    res.render("books/index", { books, title: "Books" });
 }));
 
 /* Renders the create new book form */
