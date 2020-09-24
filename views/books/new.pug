@@ -1,9 +1,10 @@
 extends ../layout
 
 block content
-  h2= title
-  
-  //- include form-error
+    
+    h2 New Book
 
-  form(action="/books", method="post")
-    include form
+    //- include errors
+
+    form(action="/books", method="post")
+        include form

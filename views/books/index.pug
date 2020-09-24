@@ -1,23 +1,22 @@
 extends ../layout
 
 block content
-  title Books
-  h1 Books
-  p
-    a.button(href="/books/new", class="btn") Create New Book
-  table
-    thead
-      tr
-        th Title
-          //- a.button(href="/books/title/asc", class="btn") Title
-        th Author
-        th Genre
-        th Year
-    each book in books
-      tbody
-        tr
-          td
-            a(href="/books/" + book.id)= book.title
-            td= book.author
-            td= book.genre
-            td= book.year
+    h1 Books
+    p
+        a.button(href="/books/new", class="btn") Create New Book
+    table
+        thead
+            tr
+                th Title
+                //- a.button(href="/books/title/asc", class="btn") Title
+                th Author
+                th Genre
+                th Year
+        tbody
+            each book in books 
+                tr
+                    td
+                        a(href="/books/" + book.id) #{book.title}
+                    td #{book.author}
+                    td #{book.genre}
+                    td #{book.year}

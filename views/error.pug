@@ -1,7 +1,9 @@
 extends layout
 
 block content
-  if(errors)
-    h1= message
-    h2= error.status
-    pre #{error.stack}
+    h1 Server Error
+    h2 Sorry! There was an error on the server.
+    a.button(href='/') Go Home
+    //- h1= message
+    //- h2= error.status
+    //- pre #{error.stack}
