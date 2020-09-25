@@ -13,7 +13,7 @@ function asyncHandler(cb){
     }
   }
 }
-// middleware async abstraction: https://teamtreehouse.com/library/create-entries
+// middleware for async abstraction: https://teamtreehouse.com/library/create-entries
 
 /* GET all books */
 router.get('/', asyncHandler(async (req, res, next) => {
@@ -33,18 +33,15 @@ router.post('/new', asyncHandler(async (req, res, next) => {
     res.redirect('/books');
 }));
 
-/* ??? Update book ??? */
+/* Update book */
 router.get('/:id', asyncHandler(async (req, res, next) => {
     const book = await Book.findByPk(req.params.id)
     if (book) {
-        console.log(book)
         res.render("books/update", { book, title: "Update Book" })
     } else {
-        console.error(error)
-        console.log("big error in update book")
-        // const error = new Error('500 error')
-        // error.status = 500;
-        // next(error)
+        const error = new Error('500 error')
+        error.status = 500;
+        next(error)
     }
 }));
 
@@ -52,17 +49,43 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
 router.post('/:id', asyncHandler(async (req, res) => {
     let book;
     book = await Book.findByPk(req.params.id);
-    await book.update(req.body);
-    console.log(req.body)
-    res.redirect('/books');
+    if (book) {
+        await book.update(req.body);
+        console.log("POST UPDATE BOOK")
+        res.redirect('/books');
+    } else {
+        const error = new Error('500 error')
+        error.status = 500;
+        next(error)
+    }
 }));
 
+/* GET delete book */
+// router.get('/:id/delete', asyncHandler(async (req, res) => {
+//     const book = await Book.findByPk(req.params.id)
+//     if (book) {
+//         res.render("books/update", { book })
+//     } else {
+//         const error = new Error('500 Error')
+//         error.status = 500;
+//         next(error)
+//     }
+// }));
+
 /* POST Delete a book, /books/:id/delete */
-// router.post('/:id', asyncHandler(async (req, res) => {
-//   const book = await Book.findByPk(req.params.id);
-//   await book.destroy();
-//   res.redirect("/books" + book.id);
-// }))
+router.post('/:id/delete', asyncHandler(async (req, res) => {
+  let book;
+  book = await Book.findByPk(req.params.id);
+  console.log("INSIDE DELETE!")
+  if (book) {
+        await book.destroy();
+        res.redirect("/books");
+  } else {
+        const error = new Error('500 Error')
+        error.status = 500;
+        next(error)
+  }
+}))
 
 module.exports = router;
 

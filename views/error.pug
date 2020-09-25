@@ -1,9 +1,10 @@
 extends layout
 
 block content
-    h1 Server Error
-    h2 Sorry! There was an error on the server.
+    h1 Server Error - #{message}
+    h2 Sorry! There is a problem on the server.
+    
+    pre #{error.stack}
+    
+    br
     a.button(href='/') Go Home
-    //- h1= message
-    //- h2= error.status
-    //- pre #{error.stack}
