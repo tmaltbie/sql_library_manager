@@ -2,7 +2,7 @@ extends ../layout
 
 block content
     h1 Books
-    form.search-form(action='', method='')
+    form.search-form(action='/search', method='post')
         input(type='search', name='term', placeholder='find a book...')
         input(type='submit', value='Search')
     p
