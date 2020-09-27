@@ -1,9 +1,12 @@
 extend ../layout
 
 block content
-    h1 Page Not Found - #{err.status} Error
-
-    p Sorry! Server could not locate the page you're looking for.
-
+    h1= message
+    h2 #{error.status} - Page Not Found
+    
     p 
         a.button(href='/books') Go Home
+    
+    br
+
+    pre #{error.stack}
