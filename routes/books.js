@@ -94,9 +94,11 @@ router.post('/:id/delete', asyncHandler(async (req, res) => {
 
 // Search for books // let where = {[Op.or]: {}};
 router.post('/search', asyncHandler(async (req, res) => {
-    const { term } = req.query
-    book = await Book.findAll({ where: { title: { [Op.like]: '%' + term + '%' } } })
-    res.render('/', {books})
+    let { term } = req.query;
+    let book;
+    term = term.toLowerCase();
+    book = await Book.findAll({ where: { title: { [Op.like]: `%${term}%` } } })
+    res.render('/', { book })
         // .then(books => res.render('/', { books }))
         // .catch(err => console.log(err))
 }));
