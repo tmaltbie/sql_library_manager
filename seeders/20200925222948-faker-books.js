@@ -17,7 +17,7 @@ const faker = require('faker');
 //     2020 
 // ]
 
-const books = [...Array(25)].map((book) => (
+const books = [...Array(33)].map((book) => (
     {
         title: faker.lorem.words(),
         author: faker.name.findName(),

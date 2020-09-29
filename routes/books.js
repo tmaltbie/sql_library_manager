@@ -25,7 +25,7 @@ router.get('/', asyncHandler(async (req, res, next) => {
     res.render("books/index", { books, title: "Books" });
 }));
 
-// Search for books 
+/* Search for books */
 router.post('/search', asyncHandler(async (req, res) => {
     // let where = {[Op.or]: {}};
     let book;
@@ -34,16 +34,19 @@ router.post('/search', asyncHandler(async (req, res) => {
     console.log(term)
 
     if(term) {
-        book = await Book.findAll({ where: { 
-            [Op.or]:
-                [
-                    {title: { [Op.like]: `%${term}%` }},
-                    {author: { [Op.like]: `%${term}%` }},
-                    {genre: { [Op.like]: `%${term}%` }},
-                    {year: { [Op.like]: `%${term}%` }},
-                ]
-        }})
+        book = await Book.findAll({ 
+            where: { 
+                [Op.or]:
+                    [
+                        {title: { [Op.like]: `%${term}%` }},
+                        {author: { [Op.like]: `%${term}%` }},
+                        {genre: { [Op.like]: `%${term}%` }},
+                        {year: { [Op.like]: `%${term}%` }},
+                    ]
+            }
+        }) //.then(books => res.json(books)) // see the results in JSON format 
     }
+
     console.log(book)
     res.render('books/index', { book })
     
