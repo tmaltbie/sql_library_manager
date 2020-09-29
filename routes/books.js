@@ -19,28 +19,15 @@ function asyncHandler(cb){
 }
 // middleware for async abstraction: https://teamtreehouse.com/library/create-entries
 
-// Implementation of Pagination
-const paginate = (query, { page, pageSize }) => {
-    const offset = page * pageSize;
-    const limit = pageSize;
-
-    return {
-        ...query,
-        offset,
-        limit,
-    };
-};
-
 /* GET all books & paginate */
 router.get('/', asyncHandler(async (req, res, next) => {
-    const books = await Book.findAll({
-        // paginate(
-            // {
-                // where: {}, // conditions
-                // ...paginate({ page, pageSize })
-            // }
-        // )
-    });
+    let limit = 12; // number of records per page
+    let offset = 0;
+    const books = await Book.findAll()
+        
+    // const books = await Book.findAndCountAll({
+        
+    // });
     res.render("books/index", { books, title: "Books" });
 }));
 
