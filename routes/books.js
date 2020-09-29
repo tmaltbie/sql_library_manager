@@ -25,6 +25,32 @@ router.get('/', asyncHandler(async (req, res, next) => {
     res.render("books/index", { books, title: "Books" });
 }));
 
+// Search for books 
+router.post('/search', asyncHandler(async (req, res) => {
+    // let where = {[Op.or]: {}};
+    let book;
+    let {term} = req.body;
+    // term = term.toLowerCase();
+    console.log(term)
+
+    if(term) {
+        book = await Book.findAll({ where: { 
+            [Op.or]:
+                [
+                    {title: { [Op.like]: `%${term}%` }},
+                    {author: { [Op.like]: `%${term}%` }},
+                    {genre: { [Op.like]: `%${term}%` }},
+                    {year: { [Op.like]: `%${term}%` }},
+                ]
+        }})
+    }
+    console.log(book)
+    res.render('books/index', { book })
+    
+        // .then(books => res.render('/', { book }))
+        // .catch(err => console.log(err))
+}));
+
 /* Renders the create new book form */
 router.get('/new', (req, res, next) => {
     res.render("books/new", { book: {}, title: "Add New Book" })
@@ -91,17 +117,6 @@ router.post('/:id/delete', asyncHandler(async (req, res) => {
         res.sendStatus(404)
   }
 }))
-
-// Search for books // let where = {[Op.or]: {}};
-router.post('/search', asyncHandler(async (req, res) => {
-    let { term } = req.query;
-    let book;
-    term = term.toLowerCase();
-    book = await Book.findAll({ where: { title: { [Op.like]: `%${term}%` } } })
-    res.render('/', { book })
-        // .then(books => res.render('/', { books }))
-        // .catch(err => console.log(err))
-}));
 
 module.exports = router;
 

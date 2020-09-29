@@ -2,9 +2,12 @@ extends ../layout
 
 block content
     h1 Books
-    form.search-form(action='/search', method='post')
-        input(type='search', name='term', placeholder='find a book...')
-        input(type='submit', value='Search')
+    
+    form.search-form(action='books/search', method='post')
+        input(type='search', name='term', id='term', placeholder='find a book...')
+        input(type='submit', value='Search', id='search-button')
+
+    
     p
         a.button(href="/books/new") Create New Book
     table
