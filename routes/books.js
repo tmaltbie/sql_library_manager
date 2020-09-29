@@ -34,8 +34,12 @@ const paginate = (query, { page, pageSize }) => {
 /* GET all books & paginate */
 router.get('/', asyncHandler(async (req, res, next) => {
     const books = await Book.findAll({
-        // where: {}, // conditions
-        // ...paginate({ page, pageSize })
+        // paginate(
+            // {
+                // where: {}, // conditions
+                // ...paginate({ page, pageSize })
+            // }
+        // )
     });
     res.render("books/index", { books, title: "Books" });
 }));
