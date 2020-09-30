@@ -25,7 +25,7 @@ body {
   }
   
   form a.button, input[type=submit] {
-    margin-left: 140px;
+    margin-left: 24px;
     transition: 0.4s;
   }
   
@@ -95,3 +95,8 @@ body {
   .error {
     color: rgb(236, 15, 15);
   }
+
+  /* .sidebyside {
+      display: flex;
+      flex-direction: row;
+  } */

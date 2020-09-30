@@ -3,13 +3,19 @@ extends ../layout
 block content
     h1 Books
     
-    form.search-form(action='books/search', method='post')
+    form.search-form(action='/books/search', method='post')
         input(type='search', name='term', id='term', placeholder='find a book...')
         input(type='submit', value='Search', id='search-button')
 
+    div.sidebyside
+        if search
+            p
+                a.button(href="/books") Go Home
+        else
     
-    p
-        a.button(href="/books/new") Create New Book
+        p
+            a.button(href="/books/new") Create New Book
+
     table
         thead
             tr
@@ -19,10 +25,12 @@ block content
                 th Genre
                 th Year
         tbody
-            each book in books 
+            each book in books
                 tr
                     td
                         a(href="/books/" + book.id) #{book.title}
                     td #{book.author}
                     td #{book.genre}
                     td #{book.year}
+            else
+                td No results found... try again

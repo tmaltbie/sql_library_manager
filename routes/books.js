@@ -23,7 +23,9 @@ function asyncHandler(cb){
 router.get('/', asyncHandler(async (req, res, next) => {
     let limit = 12; // number of records per page
     let offset = 0;
-    const books = await Book.findAll()
+    const books = await Book.findAll({
+        limit: 12,
+    })
         
     // const books = await Book.findAndCountAll({
         
@@ -34,13 +36,11 @@ router.get('/', asyncHandler(async (req, res, next) => {
 /* Search for books */
 router.post('/search', asyncHandler(async (req, res) => {
     // let where = {[Op.or]: {}};
-    let book;
+    let books;
     let {term} = req.body;
     // term = term.toLowerCase();
-    console.log(term)
-
     if(term) {
-        book = await Book.findAll({ 
+        books = await Book.findAll({ 
             where: { 
                 [Op.or]:
                     [
@@ -51,13 +51,11 @@ router.post('/search', asyncHandler(async (req, res) => {
                     ]
             }
         }) //.then(books => res.json(books)) // see the results in JSON format 
+    } else {
+        books = await Book.findAll()
+        res.render("books/index", { books, title: "Books" });
     }
-
-    console.log(book)
-    res.render('books/index', { book })
-    
-        // .then(books => res.render('/', { book }))
-        // .catch(err => console.log(err))
+    res.render('books/index', { books, title: "Books", search: true })
 }));
 
 /* Renders the create new book form */
