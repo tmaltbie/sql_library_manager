@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Book = require('../models').Book;
 
+// const paginate = require('../public/javascripts/index')
+
 const { Sequelize } = require('../models');
 const { sequelize } = require('../models'); // ??
 const Op = Sequelize.Op;
@@ -21,9 +23,11 @@ function asyncHandler(cb){
 
 /* GET all books & paginate */
 router.get('/', asyncHandler(async (req, res, next) => {
-    let limit = 12; // number of records per page
-    let offset = 0;
-    const books = await Book.findAll()
+    let books = await Book.findAll({
+        limit: 12,
+        offset: 0
+    }) 
+    // res.json(results)
     res.render("books/index", { books, title: "Books" });
 }));
 
@@ -118,6 +122,73 @@ router.post('/:id/delete', asyncHandler(async (req, res) => {
         res.sendStatus(404)
   }
 }))
+
+///////////////////////////
+///////////////////////////
+///////////////////////////
+// // TEST PAGINATION // //
+///////////////////////////
+///////////////////////////
+///////////////////////////
+// const page = parseInt(req.query.page)
+//     const limit = parseInt(req.query.limit)
+
+//     const startIndex = (page - 1) * limit
+//     const endIndex = page * limit
+
+//     const results = {}
+    
+//     if (endIndex < books.length) {
+//         results.next = {
+//             page: page + 1,
+//             limit: limit
+//         }
+//     }
+
+//     if (startIndex > 0) {
+//         results.prev = {
+//             page: page - 1,
+//             limit: limit
+//         }
+//     }
+   
+//     results.results = await Book.findAll({limit: limit, skip: startIndex})
+
+// function paginatedResults(model) {
+//     return async (req, res, next) => {
+//         let model = await Book.findAll()
+//         const page = parseInt(req.query.page)
+//         const limit = parseInt(req.query.limit)
+
+//         const startIndex = (page - 1) * limit
+//         const endIndex = page * limit
+
+//         const results = {}
+        
+//         if (endIndex < model.length) {
+//             results.next = {
+//                 page: page + 1,
+//                 limit: limit
+//             }
+//         }
+
+//         if (startIndex > 0) {
+//             results.prev = {
+//                 page: page - 1,
+//                 limit: limit
+//             }
+//         }
+//         try {
+//             results.results = await model.findAll({limit: limit, skip: startIndex})
+//             next()
+//         } catch (error) {
+//             res.status(500).render('/books', { error })
+//         }
+
+//         res.paginatedResults = results
+//         next()
+//     }
+// }
 
 module.exports = router;
 
