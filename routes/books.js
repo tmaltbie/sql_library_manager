@@ -23,13 +23,7 @@ function asyncHandler(cb){
 router.get('/', asyncHandler(async (req, res, next) => {
     let limit = 12; // number of records per page
     let offset = 0;
-    const books = await Book.findAll({
-        limit: 12,
-    })
-        
-    // const books = await Book.findAndCountAll({
-        
-    // });
+    const books = await Book.findAll()
     res.render("books/index", { books, title: "Books" });
 }));
 
