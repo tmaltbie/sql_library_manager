@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Book = require('../models').Book;
 
-// const paginate = require('../public/javascripts/index')
-
 const { Sequelize } = require('../models');
 const { sequelize } = require('../models'); // ??
 const Op = Sequelize.Op;
@@ -21,14 +19,56 @@ function asyncHandler(cb){
 }
 // middleware for async abstraction: https://teamtreehouse.com/library/create-entries
 
+// pagination idea from https://www.youtube.com/watch?v=ZX3qt0UWifc
+// router.get('/', asyncHandler(async (req, res, next) => {
+//     let allBooks = await Book.findAll() // for total book #
+//     let books = await Book.findAll()
+
+//     const page = parseInt(req.query.page)
+//     const limit = parseInt(req.query.limit)
+
+//     const startIndex = (page - 1) * limit
+//     const endIndex = page * limit
+
+//     const results = {}
+    
+//     if (endIndex < books.length) {
+//         results.next = {
+//             page: page + 1,
+//             limit: limit
+//         }
+//     }
+
+//     if (startIndex > 0) {
+//         results.prev = {
+//             page: page - 1,
+//             limit: limit
+//         }
+//     }
+
+//     // results.results = books.slice(startIndex, endIndex)
+//     results.results = await Book.findAll({limit: limit, skip: startIndex})
+
+//     // res.json(results)
+//     res.render("books/index", { books: books, allBooks, title: "Books"});
+// }));
+
 /* GET all books & paginate */
 router.get('/', asyncHandler(async (req, res, next) => {
+    let offset = 0
+    let limit = 12
+    //let page = {offset: 24}
     let books = await Book.findAll({
-        limit: 12,
-        offset: 0
-    }) 
+        offset: offset,
+        limit: limit,
+    })
+    let allBooks = await Book.findAll()
     // res.json(results)
-    res.render("books/index", { books, title: "Books" });
+    display = (i, limit, offset) => {
+        return offset = i * limit
+    }
+
+    res.render("books/index", { books, allBooks, offset, limit, display, title: "Books" });
 }));
 
 /* Search for books */
@@ -130,7 +170,7 @@ router.post('/:id/delete', asyncHandler(async (req, res) => {
 ///////////////////////////
 ///////////////////////////
 ///////////////////////////
-// const page = parseInt(req.query.page)
+//  const page = parseInt(req.query.page)
 //     const limit = parseInt(req.query.limit)
 
 //     const startIndex = (page - 1) * limit

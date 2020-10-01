@@ -1,5 +1,4 @@
 
-
 const books = document.querySelectorAll('tr')
 const body = document.querySelector('body')
 const limit = 12
@@ -33,4 +32,6 @@ const appendLinks = (list) => {
 
 appendLinks(books)
 
-module.exports
+func = function (offset)  {
+    offset+12
+}

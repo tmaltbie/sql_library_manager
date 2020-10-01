@@ -102,7 +102,7 @@ body {
   } */
 
   .pagination{
-    margin: 40px 0 0 0;
+    margin: 40px 8px 0 8px;
     text-align: center;
   }
    
@@ -113,9 +113,9 @@ body {
       .pagination li a{
         border: 1px solid #eaeaea;
         border-radius: 5px;
+        margin-left: 4px;
         padding: 3px 8px;
         text-decoration: none;
-        color: #4ba6c3;
       }
   
       .pagination li a.active,

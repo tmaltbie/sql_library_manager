@@ -2,7 +2,7 @@ extends ../layout
 
 block content
     h1 Books
-    
+    h4 The library has #{allBooks.length} books
     form.search-form(action='/books/search', method='post')
         input(type='search', name='term', id='term', placeholder='find a book...')
         input(type='submit', value='Search', id='search-button')
@@ -21,7 +21,7 @@ block content
             tr
                 th Title
                 //- a.button(href="/books/title/asc", class="btn") Title
-                th Author
+                th Author   
                 th Genre
                 th Year
         tbody
@@ -34,3 +34,24 @@ block content
                     td #{book.year}
             else
                 td No results found... try again
+    
+    
+    ul.pagination
+        script
+            | console.log(#{offset})
+            | var inc = (#{offset} + #{limit})
+            | console.log(inc) 
+            | const index = !{JSON.stringify(allBooks[1])}
+            | console.log(index)
+            
+        - var list = Math.ceil(allBooks.length / limit)
+        - for (var i = 0; i<list; i++)
+            li
+                //- if (i === 0)
+                a(class='button',
+                    class='active', 
+                    href="#",
+                    )= i+1
+                //- else 
+                    a(class='button', href="#")= i+1
+        
