@@ -25,16 +25,7 @@ module.exports = sequelize => {
             }
         }, 
         genre: Sequelize.STRING,
-        year: {
-            type: Sequelize.INTEGER,
-            allowNull: true,
-            validate: {
-                isInt: {
-                    
-                    msg: '"Year" must be an integer number'
-                }
-            }
-        }
+        year: Sequelize.INTEGER,
     }, { sequelize });
   
     return Book;

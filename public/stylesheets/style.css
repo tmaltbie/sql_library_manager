@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=BioRhyme&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin&display=swap');
+
 body {
     padding: 10px 50px 50px;
-    font: 18px "Garamond", serif;
+    font-family: 'Cabin', sans-serif;
+    font-size: 18px;
   }
   
   a {
@@ -17,7 +21,7 @@ body {
   a.button, input[type=submit] {
     color: white;
     background: #019875;
-    font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+    /* font-family: "Cabin", sans-serif, Helvetica, Arial; */
     padding: 10px 14px 12px;
     font-size: 14px;
     border-radius: 2px;
@@ -47,11 +51,18 @@ body {
     margin-bottom: 10px;
     line-height: 1.3em;
   }
+
+  h1 {
+    font-family: 'BioRhyme', serif;
+  }
   
   h2 {
+    font-family: 'BioRhyme', serif;
     border-top: 2px solid #e7e7e7;
     padding-top: 20px;
   }
+
+  h3
   
   th {
     border-bottom: 2px solid #D8B493;
