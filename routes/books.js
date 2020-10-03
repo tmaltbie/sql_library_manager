@@ -21,11 +21,10 @@ function asyncHandler(cb){
 router.get('/', asyncHandler(async (req, res, next) => {
     let books = await Book.findAll()
     res.render("books/index", { books, title: "Books"});
-    /////////////////////////////////////////////////
+    
     /////////////////////////////////////////////////
     /* ~ failed attempt at paginaiton ~ saving for future attemopt ~
     /////////////////////////////////////////////////
-    ////////////////////////////////////////////////
     // const page = parseInt(req.query.page)
     // const limit = parseInt(req.query.limit)
 
@@ -51,7 +50,6 @@ router.get('/', asyncHandler(async (req, res, next) => {
     // results.results = books.slice(startIndex, endIndex)
     // results.results = await Book.findAll({book, limit: limit, offset: startIndex})
     // res.json(results)
-    ///////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////
     */
 }));
@@ -126,6 +124,7 @@ router.post('/:id', asyncHandler(async (req, res) => {
     } catch (error) {
         if(error.name === 'SequelizeValidationError') {
             book = await Book.build(req.body);
+            book.id = book.id || req.params.id;
             res.render('books/update-book', { book, errors: error.errors, title: 'Update Book' })
         } else {
             console.error(error)
